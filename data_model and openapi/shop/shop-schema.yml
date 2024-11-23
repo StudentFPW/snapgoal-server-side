@@ -1,0 +1,96 @@
+openapi: 3.0.0
+info:
+  title: Product and Cart API
+  description: API for managing products and shopping carts
+  version: 1.0.0
+paths:
+  /product:
+    post:
+      summary: Create a new product
+      operationId: createProduct
+      requestBody:
+        description: Product object to be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+  /product/{uuid}:
+    get:
+      summary: Get a specific product by UUID
+      operationId: getProductByUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: UUID of the product to fetch
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Product details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Product not found
+
+  /products:
+    get:
+      summary: List all products
+      operationId: listProducts
+      responses:
+        '200':
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+          example: 'Smartphone'
+        description:
+          type: string
+          example: 'Latest smartphone with advanced features.'
+        uuid:
+          type: string
+          format: uuid
+          example: 'd47e7f97-2f3b-4236-b234-e5c1f487f0bf'
+        price:
+          type: integer
+          example: 299
+        image:
+          type: string
+          example: 'https://example.com/images/smartphone.jpg'
+        category:
+          type: string
+          example: 'electronics'
+        availability:
+          type: boolean
+          example: true
+        feedback:
+          type: number
+          format: string
+          example: string
+      required:
+        - title
+        - price
+        - image
