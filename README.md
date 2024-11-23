@@ -1,52 +1,40 @@
-## Data storage registries
+## Database
 
-| Registry | Purpose |
-|--------|-----------|
-| Rating | Rating configurations and calculated ratings |
-| Result | Participant results |
+| Database | Description |
+|----------|-------------|
+| Product  | Product catalog with details like price, category, and availability |
 
-## Data types in registries
+---
 
-| Registry | Data type (object_type) | Description |
-|--------|------------|------------------------|
-| Rating | rating | Rules by which we evaluate rating participants |
-| Rating | competition | Calculated ratings |
-| Result | - | Result of a participant (person, team, etc.) |
+## Database data-Type
 
-## Object: rating
-Rules by which we evaluate participants.
+| Database | Data-type (object_type) | Description |
+|----------|-------------------------|-------------|
+| Product  | product                 | tag         |
 
-| Name | Purpose | Format | Unique | Mandatory |
-|---------------|-----------------------------------------------------------|-----------------------|-----------|-------------|
-| object_code | Unique rating code | String like `<project_id>:<code>` | Yes | Yes |
-| object_type | Record type | String 'rating' | No | Yes |
-| Field **data**: | | | |
-| position | Array of intervals | [[1, 10], [11, 100], [101, 500], [501, 1000], [1001, 5000], # continued...] | No | Yes |
-| order | Determines the sorting order of the array of intervals | asc/desc | No | Yes |
-| period | Time range for calculating the rating | String (e.g. "1Y" OR "O.5Y") | No | Yes |
-| period_type | Period calculation type: sliding or from the beginning of the period | slidding/fixed | No | Yes |
+---
 
-## Object: competition
-Calculated rankings. Each object can have different data, including time or numeric ranges.
+## Object: product
 
-| Name | Purpose | Format | Unique | Required |
-|--------------|------------------------------------------------------------|------------------------|------------|--------------|
-| object_type | Record type | String 'competition' | No | Yes |
-| object_item | ID of the configuration on which the ranking is calculated | uuid | Yes | Yes |
-| Field **data**: | | | |
-| interval | Data about the results and their corresponding places | `{position : [ [1,10],[11, 100]],place_result : [[1.2, 1.9],[2.5, 2.14], [5.1, 5.3]]}`| No | Yes |
-| from_date | Start date of the time interval for which the rating is calculated | Date and time | No | Yes |
-| to_date | End date of the time interval for which the rating is calculated | Date and time | No | Yes |
+Products in the store, including their details and availability.
 
-## Object: result
-Participants' results.
+| Naming           | Description                                               | Type                  | Unique | Required |
+|------------------|-----------------------------------------------------------|-----------------------|--------|----------|
+| object_type      | Type of object                                            | String 'product'       | No     | Yes      |
+| Attr **data**:   |                                                           |                       |        |          |
+| title            | Name of the product                                        | String                | No     | Yes      |
+| description      | Detailed description of the product                        | String                | No     | No       |
+| uuid| Unique object identifier                                            | UUID       | Yes     | Yes      |
+| price            | Price of the product                                       | Integer  | No     | Yes      |
+| image            | URL of the product image                                   | String (e.g., "image1.jpg") | No     | Yes      |
+| category         | Category of the product (e.g., electronics, clothing)      | String                | No     | Yes      |
+| availability     | Availability status (in stock, out of stock)              | Bool | No     | Yes      |
+| feedback         | Feedback or review score from customers                    | Decimal (1-5)          | No     | No       |
 
-| Name | Purpose | Format | Unique | Required |
-|---------------|------------------------------------------------------------|-----------------------|------------|-------------|
-| account_id | Participant group (team) identifier | uuid| No | No |
-| user_id | Member ID | uuid| No | No |
-| object_type | Result data type | String | No | No|
-| object_item | Organization ID | uuid | No | Yes |
-| Field **data**: ||||
-| result | Member Result | String | No | Yes |
-| date | Result date| Date and time | No | Yes |
+
+## Object: cart
+
+| Naming           | Description                                               | Type                  | Unique | Required |
+|------------------|-----------------------------------------------------------|-----------------------|--------|----------|
+| items         | Products in the cart    | Product array | No     | Yes       |
+
