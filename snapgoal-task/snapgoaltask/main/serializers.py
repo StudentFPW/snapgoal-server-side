@@ -8,21 +8,14 @@ class ProjectSerializer(serializers.Serializer):
     end_date = serializers.DateField(required=True)
     status = serializers.CharField(max_length=50, required=False)
     description = serializers.CharField(max_length=1024, required=True)
-    teams = serializers.ListField(
-        child=serializers.UUIDField(format="hex"),
-        required=True,
-    )
+    team_uuids = serializers.ListField(required=True)
 
 
 class TeamSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(required=False)
     title = serializers.CharField(max_length=255, required=True)
-    members = serializers.ListField(
-        child=serializers.UUIDField(format="hex"), required=True
-    )
-    tasks = serializers.ListField(
-        child=serializers.UUIDField(format="hex"), required=True
-    )
+    member_uuids = serializers.ListField(required=True)
+    task_uuids = serializers.ListField(required=True)
 
 
 class TaskSerializer(serializers.Serializer):
