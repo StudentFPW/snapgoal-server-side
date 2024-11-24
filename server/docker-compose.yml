@@ -1,0 +1,56 @@
+version: '3'
+services:
+  webserver:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./nginx/www/:/var/www/snapgoal.org:ro
+      - ./certbot/www/:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/letsencrypt/:ro
+    networks:
+      - web-network
+  badge:
+    image: openjdk:21-jdk
+    ports:
+      - 8080:8080
+    restart: always
+    volumes:
+      - ./nginx/www/:/var/www/snapgoal.org/:rw
+      - ./badge/:/var/badge/:ro
+    working_dir: /var/badge
+    command: java -jar target/badge-0.0.1-SNAPSHOT.jar
+    depends_on:
+      webserver:
+        condition: service_started
+    networks:
+      - web-network
+  db:
+    image: mysql:9.1.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: snapgoal
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password123
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    networks:
+      - web-network
+  certbot:
+    image: certbot/certbot:latest
+    depends_on:
+      webserver:
+        condition: service_started
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+
+networks:
+  web-network:
+    driver: bridge
+
