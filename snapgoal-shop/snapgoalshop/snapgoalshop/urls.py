@@ -30,19 +30,19 @@ urlpatterns = [
     path("", include("main.urls")),
     # Генерация схемы OpenAPI
     path(
-        "api/schema/",
+        "shop/schema/",
         SpectacularAPIView.as_view(),
         name="schema",
     ),
     # Swagger UI
     path(
-        "api/schema/swagger-ui/",
+        "shop/schema/swagger-ui/",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
     ),
     # Redoc
     path(
-        "api/schema/redoc/",
+        "shop/schema/redoc/",
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
