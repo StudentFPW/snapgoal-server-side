@@ -2,16 +2,20 @@ from django.db import models
 
 
 class Project(models.Model):
+    STATUS_CHOICES = [
+        ("open", "Open"),
+        ("completed", "Completed"),
+    ]
+
     title = models.CharField(max_length=255)
     uuid = models.UUIDField(unique=True)
     description = models.TextField()
     start_date = models.DateField()
     end_date = models.DateField()
     status = models.CharField(
-        choices=["open", "complete"],
-        default="open",
+        max_length=20,
+        choices=STATUS_CHOICES,
         blank=True,
-        null=True,
     )
     team_uuids = models.JSONField(blank=True, null=True)
 
@@ -30,6 +34,12 @@ class Team(models.Model):
 
 
 class Task(models.Model):
+    STATUS_CHOICES = [
+        ("open", "Open"),
+        ("in progress", "In progress"),
+        ("review", "Review"),
+        ("completed", "Completed"),
+    ]
     uuid = models.UUIDField(unique=True)
     badge_uuid = models.UUIDField()
     title = models.CharField(max_length=255)
@@ -37,10 +47,9 @@ class Task(models.Model):
     image = models.URLField(blank=True, null=True)
     feedback = models.TextField(blank=True, null=True)
     status = models.CharField(
-        choices=["open", "in progress", "review", "complete"],
-        default="open",
+        max_length=20,
+        choices=STATUS_CHOICES,
         blank=True,
-        null=True,
     )
     start_date = models.DateField()
     due_date = models.DateField()
