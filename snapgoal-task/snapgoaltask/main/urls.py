@@ -18,6 +18,11 @@ urlpatterns = [
         ProjectViewSet.as_view({"get": "retrieve"}),
         name="project-detail",
     ),
+    path(
+        "project-update/<uuid:project_uuid>/",
+        ProjectViewSet.as_view({"put": "update"}),
+        name="project-update",
+    ),
     # Team URLs
     path(
         "teams/",
@@ -34,6 +39,11 @@ urlpatterns = [
         TeamViewSet.as_view({"get": "retrieve"}),
         name="team-detail",
     ),
+    path(
+        "team-update/<uuid:team_uuid>/",
+        TeamViewSet.as_view({"put": "update"}),
+        name="team-update",
+    ),
     # Task URLs
     path(
         "tasks/",
@@ -49,5 +59,10 @@ urlpatterns = [
         "task/<uuid:task_uuid>/",
         TaskViewSet.as_view({"get": "retrieve"}),
         name="task-detail",
+    ),
+    path(
+        "task-update/<uuid:task_uuid>/",
+        TaskViewSet.as_view({"put": "update"}),
+        name="task-update",
     ),
 ]

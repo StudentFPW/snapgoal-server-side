@@ -79,6 +79,16 @@ create_project_schema_decorator = extend_schema(
     },
 )
 
+update_project_schema_decorator = extend_schema(
+    tags=["Project"],
+    request=ProjectSerializer,
+    responses={
+        200: OpenApiResponse(
+            response=project_schema,
+        )
+    },
+)
+
 team_schema = {
     "type": "object",
     "properties": {
@@ -126,6 +136,16 @@ get_team_by_id_schema_decorator = extend_schema(
 )
 
 create_team_schema_decorator = extend_schema(
+    tags=["Team"],
+    request=TeamSerializer,
+    responses={
+        200: OpenApiResponse(
+            response=team_schema,
+        )
+    },
+)
+
+update_team_schema_decorator = extend_schema(
     tags=["Team"],
     request=TeamSerializer,
     responses={
@@ -207,6 +227,16 @@ get_task_by_id_schema_decorator = extend_schema(
 )
 
 create_task_schema_decorator = extend_schema(
+    tags=["Task"],
+    request=TaskSerializer,
+    responses={
+        200: OpenApiResponse(
+            response=task_schema,
+        )
+    },
+)
+
+update_task_schema_decorator = extend_schema(
     tags=["Task"],
     request=TaskSerializer,
     responses={

@@ -18,4 +18,9 @@ urlpatterns = [
         ProductViewSet.as_view({"get": "retrieve"}),  # Детали
         name="product-detail",
     ),
+    path(
+        "product-update/<uuid:product_uuid>/",
+        ProductViewSet.as_view({"put": "update"}),  # Обновлять
+        name="product-update",
+    ),
 ]

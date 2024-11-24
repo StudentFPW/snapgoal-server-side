@@ -54,7 +54,6 @@ product_schema = {
     },
 }
 
-# Extend schema for list_products view
 list_products_schema_decorator = extend_schema(
     tags=["Product"],
     responses={
@@ -63,7 +62,6 @@ list_products_schema_decorator = extend_schema(
         )
     },
 )
-
 
 get_product_by_id_schema_decorator = extend_schema(
     tags=["Product"],
@@ -75,6 +73,16 @@ get_product_by_id_schema_decorator = extend_schema(
 )
 
 create_product_schema_decorator = extend_schema(
+    tags=["Product"],
+    request=ProductSerializer,
+    responses={
+        200: OpenApiResponse(
+            response=product_schema,
+        )
+    },
+)
+
+update_product_schema_decorator = extend_schema(
     tags=["Product"],
     request=ProductSerializer,
     responses={
