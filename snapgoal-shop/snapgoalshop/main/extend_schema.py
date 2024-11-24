@@ -1,25 +1,10 @@
 from drf_spectacular.utils import (
     extend_schema,
-    OpenApiParameter,
     OpenApiResponse,
-    OpenApiTypes,
 )
 
 from .serializers import (
     ProductSerializer,
-)
-
-
-parameters_schema_decorator = extend_schema(
-    parameters=[
-        OpenApiParameter(
-            name="Authorization-ID",
-            type=OpenApiTypes.UUID,
-            location=OpenApiParameter.HEADER,
-            required=True,
-            description="Токен авторизации",
-        ),
-    ]
 )
 
 product_schema = {

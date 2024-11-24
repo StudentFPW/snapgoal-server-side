@@ -9,16 +9,17 @@ class ProjectSerializer(serializers.Serializer):
     status = serializers.ChoiceField(
         choices=["open", "complete"],
         default="open",
+        required=False,
     )
     description = serializers.CharField(max_length=1024, required=True)
-    team_uuids = serializers.ListField(required=True)
+    team_uuids = serializers.ListField(required=False)
 
 
 class TeamSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(required=False)
     title = serializers.CharField(max_length=255, required=True)
-    member_uuids = serializers.ListField(required=True)
-    task_uuids = serializers.ListField(required=True)
+    member_uuids = serializers.ListField(required=False)
+    task_uuids = serializers.ListField(required=False)
 
 
 class TaskSerializer(serializers.Serializer):
@@ -31,6 +32,7 @@ class TaskSerializer(serializers.Serializer):
     status = serializers.ChoiceField(
         choices=["open", "in progress", "review", "complete"],
         default="open",
+        required=False,
     )
     start_date = serializers.DateField(required=True)
     due_date = serializers.DateField(required=True)

@@ -7,8 +7,13 @@ class Project(models.Model):
     description = models.TextField()
     start_date = models.DateField()
     end_date = models.DateField()
-    status = models.CharField(max_length=50, blank=True, null=True)
-    team_uuids = models.JSONField()
+    status = models.CharField(
+        choices=["open", "complete"],
+        default="open",
+        blank=True,
+        null=True,
+    )
+    team_uuids = models.JSONField(blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -17,8 +22,8 @@ class Project(models.Model):
 class Team(models.Model):
     uuid = models.UUIDField(unique=True)
     title = models.CharField(max_length=255)
-    member_uuids = models.JSONField()
-    task_uuids = models.JSONField()
+    member_uuids = models.JSONField(blank=True, null=True)
+    task_uuids = models.JSONField(blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -31,7 +36,12 @@ class Task(models.Model):
     description = models.TextField()
     image = models.URLField(blank=True, null=True)
     feedback = models.TextField(blank=True, null=True)
-    status = models.CharField(max_length=100, blank=True, null=True)
+    status = models.CharField(
+        choices=["open", "in progress", "review", "complete"],
+        default="open",
+        blank=True,
+        null=True,
+    )
     start_date = models.DateField()
     due_date = models.DateField()
     assignee_id = models.UUIDField(blank=True, null=True)

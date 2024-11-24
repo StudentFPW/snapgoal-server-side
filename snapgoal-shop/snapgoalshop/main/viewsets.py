@@ -7,7 +7,6 @@ from .models import Product
 from .serializers import ProductSerializer
 
 from .extend_schema import (
-    parameters_schema_decorator,
     list_products_schema_decorator,
     get_product_by_id_schema_decorator,
     create_product_schema_decorator,
